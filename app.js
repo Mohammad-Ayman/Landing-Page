@@ -27,9 +27,7 @@ const navBar = document.querySelector("#navbar__list");
 const sections = document.querySelectorAll(".sections");
 const main = document.querySelector("main");
 const addSec = document.querySelector(".add");
-const removeSec = document.querySelector(".remove");
-const navUl = document.querySelector(" header nav #navbar__list");
-let fragment = document.createDocumentFragment();
+const scrollUp = document.querySelector(".up");
 
 /**
  * End Global Variables
@@ -79,6 +77,11 @@ navLinks.forEach(function (link) {
     let target = document.querySelector(targetId);
     target.scrollIntoView({ behavior: "smooth" });
   });
+});
+
+// scroll to top of the page onClick
+scrollUp.addEventListener("click", () => {
+  document.body.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 /**
  * End Main Functions
