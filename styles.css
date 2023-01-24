@@ -239,7 +239,7 @@ section.your-active-class .landing__container::after {
   }
 }
 
-.up {
+.scrollToTop {
   position: fixed;
   bottom: 20px;
   right: 20px;
