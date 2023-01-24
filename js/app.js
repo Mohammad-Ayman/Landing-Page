@@ -71,7 +71,7 @@ function buildNav() {
 // Scroll to anchor ID using scrollTO event
 //Scrolling smoothly to the section
 function scroll() {
-  let navLinks = document.querySelectorAll("a");
+  let navLinks = document.querySelectorAll("#navbar__list a");
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
