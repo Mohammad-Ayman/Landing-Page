@@ -24,10 +24,10 @@
  */
 const navMenu = document.querySelector(".navbar__menu");
 const navBar = document.querySelector("#navbar__list");
-const sections = document.querySelectorAll(".sections");
+const sections = document.querySelectorAll("section");
 const main = document.querySelector("main");
 const addSec = document.querySelector(".add");
-const scrollUp = document.querySelector(".up");
+const scrollUp = document.querySelector(".scrollToTop");
 
 /**
  * End Global Variables
@@ -37,16 +37,18 @@ const scrollUp = document.querySelector(".up");
 let sectionNumber = sections.length + 1;
 function addSection() {
   let newSection = document.createElement("section");
-  newSection.setAttribute("id", "section" + (sections.length + 1));
+  newSection.setAttribute("id", "section" + sectionNumber);
+  newSection.setAttribute("data-nav", "Section " + sectionNumber);
   newSection.setAttribute("class", "sections");
-  newSection.setAttribute("data-nav", "Section " + (sections.length + 1));
   newSection.innerHTML = `<div class='landing__container'><h2>Section ${sectionNumber}</h2><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem recusandae molestiae aliquid odio voluptas eaque fugiat reiciendis, pariatur, repellendus consequatur atque ut nisi adipisci eos? Ipsa culpa id ipsam asperiores.</p><p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinargravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam.Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentumconsectetur porttitor. Suspendisse imperdiet porttitor tortor, egetelementum tortor mollis non. </p></div>`;
   main.appendChild(newSection);
 
   let liNew = document.createElement("li");
-  liNew.innerHTML = `<a class = 'menu__link' href='#${sectionNumber}'>section${sectionNumber}</a>`;
+  liNew.innerHTML = `<a class = 'menu__link' href='#section${sectionNumber}'>section${sectionNumber}</a>`;
   navBar.appendChild(liNew);
+  newSection.scrollIntoView({ behavior: "smooth" });
   sectionNumber++;
+  scroll();
 }
 
 /**
@@ -56,32 +58,37 @@ function addSection() {
  */
 
 // build the nav
-function buildNav() {}
-sections.forEach((section) => {
-  let li = document.createElement("li");
-  li.innerHTML = `<a class = 'menu__link' href='#${section.id}'>${section.id}</a>`;
+function buildNav() {
+  sections.forEach((section) => {
+    let li = document.createElement("li");
+    li.innerHTML = `<a class = 'menu__link' href='#${section.id}'>${section.id}</a>`;
 
-  navBar.appendChild(li);
-});
-
+    navBar.appendChild(li);
+  });
+}
 // Add class 'active' to section when near top of viewport
 
 // Scroll to anchor ID using scrollTO event
 //Scrolling smoothly to the section
-
-let navLinks = document.querySelectorAll("#navbar__list a");
-navLinks.forEach(function (link) {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    let targetId = link.getAttribute("href");
-    let target = document.querySelector(targetId);
-    target.scrollIntoView({ behavior: "smooth" });
+function scroll() {
+  let navLinks = document.querySelectorAll("#navbar__list a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      let targetId = link.getAttribute("href");
+      let target = document.querySelector(targetId);
+      target.scrollIntoView({ behavior: "smooth" });
+      // window.scrollTo({top:target.offsetTop, behavior:'smooth'});
+    });
   });
-});
+}
 
 // scroll to top of the page onClick
 scrollUp.addEventListener("click", () => {
-  document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.documentElement.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 });
 /**
  * End Main Functions
@@ -92,6 +99,6 @@ scrollUp.addEventListener("click", () => {
 // Build menu
 buildNav();
 // Scroll to section on link click
-
+scroll();
 // Set sections as active
 addSec.addEventListener("click", addSection);
