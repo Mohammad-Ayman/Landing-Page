@@ -28,6 +28,7 @@ const sections = document.querySelectorAll("section");
 const main = document.querySelector("main");
 const addSec = document.querySelector(".add");
 const scrollUp = document.querySelector(".scrollToTop");
+const section1 = document.getElementById("section1");
 
 /**
  * End Global Variables
@@ -47,8 +48,8 @@ function addSection() {
   liNew.innerHTML = `<a class = 'menu__link' href='#section${sectionNumber}'>section${sectionNumber}</a>`;
   navBar.appendChild(liNew);
   newSection.scrollIntoView({ behavior: "smooth" });
-  sectionNumber++;
   scroll();
+  sectionNumber++;
 }
 
 /**
@@ -61,14 +62,38 @@ function addSection() {
 function buildNav() {
   sections.forEach((section) => {
     let li = document.createElement("li");
-    li.innerHTML = `<a class = 'menu__link' href='#${section.id}'>${section.id}</a>`;
+    li.innerHTML = `<a class = 'menu__link' href='#${section.id}'>${section.id} </a>`;
 
     navBar.appendChild(li);
   });
 }
-// Add class 'active' to section when near top of viewport
 
-// Scroll to anchor ID using scrollTO event
+// // Add class 'active' to section when near top of viewport
+function activateSection() {
+  sections.forEach((section) => {
+    let rect = section.getBoundingClientRect();
+    //check that section in viewport
+    if (
+      rect.top >= 0 &&
+      rect.top < 800 &&
+      (rect.bottom <= window.innerHeight ||
+        rect.bottom <= document.documentElement.clientHeight)
+    ) {
+      //avctivate section in viewport
+      section.classList.add("your-active-class");
+      let sectionId = section.getAttribute("id");
+      let ele = document.querySelector(`[href="#${sectionId}"]`);
+      //avctivate navigation item in viewport
+      ele.classList.add("active");
+    } else {
+      let sectionId = section.getAttribute("id");
+      let ele = document.querySelector(`[href="#${sectionId}"]`);
+      section.classList.remove("your-active-class");
+      ele.classList.remove("active");
+    }
+  });
+}
+
 //Scrolling smoothly to the section
 function scroll() {
   let navLinks = document.querySelectorAll("#navbar__list a");
@@ -77,8 +102,7 @@ function scroll() {
       e.preventDefault();
       let targetId = link.getAttribute("href");
       let target = document.querySelector(targetId);
-      target.scrollIntoView({ behavior: "smooth" });
-      // window.scrollTo({top:target.offsetTop, behavior:'smooth'});
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   });
 }
@@ -102,3 +126,6 @@ buildNav();
 scroll();
 // Set sections as active
 addSec.addEventListener("click", addSection);
+// Highlight in view section
+window.addEventListener("scroll", activateSection);
+activateSection();
