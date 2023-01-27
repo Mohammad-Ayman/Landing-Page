@@ -209,6 +209,10 @@ section:nth-of-type(3n + 1) .landing__container::after {
 
 /* ---- Theme State Rules ---- */
 /* Section Active Styles */
+.active {
+  background: #333;
+  color: #fff;
+}
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 section.your-active-class {
   background: rgb(0, 0, 0);
@@ -244,3 +248,4 @@ section.your-active-class .landing__container::after {
   bottom: 20px;
   right: 20px;
 }
+
