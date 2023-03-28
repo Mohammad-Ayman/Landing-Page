@@ -98,7 +98,15 @@ function activateSection() {
 function scroll() {
   let navLinks = document.querySelectorAll("#navbar__list a");
   navLinks.forEach((link) => {
+    //click event listener for mouse-based devices
     link.addEventListener("click", (e) => {
+      e.preventDefault();
+      let targetId = link.getAttribute("href");
+      let target = document.querySelector(targetId);
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    //touch event listener for touch-based devices
+    link.addEventListener("touchstart", (e) => {
       e.preventDefault();
       let targetId = link.getAttribute("href");
       let target = document.querySelector(targetId);
@@ -107,6 +115,7 @@ function scroll() {
   });
 }
 
+
 // scroll to top of the page onClick
 scrollUp.addEventListener("click", () => {
   document.documentElement.scrollIntoView({
@@ -114,6 +123,15 @@ scrollUp.addEventListener("click", () => {
     block: "start",
   });
 });
+
+//touch event listener for mobile devices
+scrollUp.addEventListener("touchend", () => {
+  document.documentElement.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+});
+
 /**
  * End Main Functions
  * Begin Events
